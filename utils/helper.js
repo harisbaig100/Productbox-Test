@@ -1,6 +1,9 @@
 const http = require("http");
 
 module.exports = {
+	resolveUrl: function(url, callback) {
+		return callback(url);
+	},
     getTitleFromUrl: function (address, sendTitle) {
         // Regular expression to extract the title from the HTML content of the URL
         const regex = /(<\s*title[^>]*>(.+?)<\s*\/\s*title)>/gi;
