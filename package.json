@@ -21,6 +21,8 @@
   "dependencies": {
     "async": "^3.2.5",
     "express": "^4.18.3",
-    "rsvp": "^4.8.5"
+    "rsvp": "^4.8.5",
+    "rxjs": "^7.8.1",
+    "rxjs-operators": "^1.1.3"
   }
 }

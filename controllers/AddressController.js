@@ -2,6 +2,8 @@ const helper = require('../utils/helper.js');
 const responseWriter = require('../responses/htmlResponseWriter.js');
 const Async = require('async');
 const RSVP = require('rsvp');
+const { from, Observable} = require('rxjs');
+const { concatMap, toArray } = require('rxjs/operators');
 
 exports.getWebsiteTitleUsingNode = function (request, response) {
     // Check if "address=" string is present in the requested URL
@@ -148,4 +150,53 @@ exports.getWebsiteTitleUsingRsvp = function (request, response) {
 			responseWriter.writeFooter(response);
 		});
 	}
+};
+
+exports.getWebsiteTitleUsingRxjs = function (request, response) {
+    // Check if "address=" string is present in the requested URL
+    if (!request.url.includes("address=")) {
+        // Render error message in HTML and send it back in the response
+        responseWriter.noAddressInUrl(response);
+        return;
+    }
+
+    // Add header to HTML response
+    responseWriter.writeHeader(response);
+
+    // Get the addresses from the request query
+    const addresses = Array.isArray(request.query.address) ? request.query.address : [request.query.address];
+
+    // Create an observable from the array of addresses
+    const addresses$ = from(addresses);
+
+    // Use concatMap operator to sequentially process each address
+    addresses$
+        .pipe(
+            concatMap(address => {
+                // Convert the getTitleFromUrl function into an observable
+                return new Observable(observer => {
+                    helper.getTitleFromUrl(address, title => {
+                        observer.next(title);
+                        observer.complete();
+                    });
+                });
+            }),
+            // Convert the resulting titles into an array
+            toArray()
+        )
+        .subscribe({
+            next: titles => {
+                // Write each title to the HTML response
+                titles.forEach(title => {
+                    responseWriter.writeUrlTitle(response, title);
+                });
+            },
+            complete: () => {
+                // Write the footer to end the HTML document
+                responseWriter.writeFooter(response);
+            },
+            error: err => {
+                console.error("Error:", err);
+            }
+        });
 };

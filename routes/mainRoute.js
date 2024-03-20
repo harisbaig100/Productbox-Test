@@ -13,6 +13,9 @@ app.get("/I/want/title/usingAsync/", addressController.getWebsiteTitleUsingAsync
 // Task 3 - using promises (RSVP)
 app.get("/I/want/title/usingRsvp/", addressController.getWebsiteTitleUsingRsvp);
 
+// BONUS - Task 4 - using using Streams for reactive prog (Rxjs)
+app.get("/I/want/title/usingRxjs/", addressController.getWebsiteTitleUsingRxjs);
+
 const server = app.listen(config.port, () => {
     console.info(`Server started on port ${config.port}.`);
 });
