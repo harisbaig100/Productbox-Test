@@ -2,10 +2,11 @@
   "name": "productbox-test",
   "version": "1.0.0",
   "description": "Full stack engineering test",
-  "main": "index.js",
+  "main": "./routes/mainRoute.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./routes/mainRoute.js"
+    "start": "node ./routes/mainRoute.js",
+    "dev": "nodemon"
   },
   "repository": {
     "type": "git",
