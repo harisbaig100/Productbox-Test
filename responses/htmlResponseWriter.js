@@ -23,7 +23,7 @@ module.exports = {
     writeFooter: function (response) {
         if (!response.finished) {
             response.write(`
-                    </ul>
+                </ul>
                 </body>
                 </html>
             `);

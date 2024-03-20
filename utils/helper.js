@@ -8,7 +8,6 @@ module.exports = {
         const addWww = address.includes("www.") ? '' : 'www.';
         const addHttp = address.includes("http://") ? '' : 'http://';
         const url = `${addHttp}${addWww}${address}`;
-
         if (url.includes(".com")) {
 			// Using the URL string directly with http.get simplifies the request without custom options
 			// because we don't dynamically modify host, path, or port, nor include additional headers.
@@ -24,7 +23,7 @@ module.exports = {
                     const match = regex.exec(data);
                     const title = match && match[2] ? match[2] : "Title Not Found";
 					// if match[2] is there send that as a title other wise show no title found
-                    sendTitle((response.statusCode == 200 ? title : "Title Not Found") + " - " + address);
+                    sendTitle(address + ' - ' + (response.statusCode == 200 ? `"${title}"` : "Title Not Found"));
                 });
 			// return call back with error if get request having issues
             }).on('error', function (e) {
