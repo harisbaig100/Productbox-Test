@@ -13,8 +13,13 @@ app.get("/I/want/title/usingAsync/", addressController.getWebsiteTitleUsingAsync
 // Task 3 - using promises (RSVP)
 app.get("/I/want/title/usingRsvp/", addressController.getWebsiteTitleUsingRsvp);
 
-// BONUS - Task 4 - using using Streams for reactive prog (Rxjs)
+// BONUS - Task 4 - using Streams for reactive prog (Rxjs)
 app.get("/I/want/title/usingRxjs/", addressController.getWebsiteTitleUsingRxjs);
+
+// route handler for all other routes
+app.use('*', (req, res) => {
+    res.status(404).send('404 - Not Found');
+});
 
 const server = app.listen(config.port, () => {
     console.info(`Server started on port ${config.port}.`);
