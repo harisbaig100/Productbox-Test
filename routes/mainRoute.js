@@ -10,6 +10,9 @@ app.get("/I/want/title/usingNode/", addressController.getWebsiteTitleUsingNode);
 // Task 2 - using async.js (flow library)
 app.get("/I/want/title/usingAsync/", addressController.getWebsiteTitleUsingAsync);
 
+// Task 3 - using promises (RSVP)
+app.get("/I/want/title/usingRsvp/", addressController.getWebsiteTitleUsingRsvp);
+
 const server = app.listen(config.port, () => {
     console.info(`Server started on port ${config.port}.`);
 });
